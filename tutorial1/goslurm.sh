@@ -22,3 +22,6 @@ if [ ! -f decay ] ; then
    echo "you probably need to compile code"
    exit 2
 fi
+
+./decay
+
