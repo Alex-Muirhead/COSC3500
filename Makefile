@@ -1,6 +1,6 @@
 
 CXX=g++
-CXXFLAGS=-g2 -fopenmp
+CXXFLAGS=-O2 -g
 
 MAKEDEPEND = $(CXX) -MM -MT $@ $(CXXFLAGS) -o $*.Td $<
 
