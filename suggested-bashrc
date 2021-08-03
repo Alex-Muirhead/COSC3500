@@ -1,0 +1,20 @@
+# .bashrc
+
+# commands in the .bashrc file in your home directory get executed when logging into the system,
+# including job scripts running in the batch queue.  So you can put common commands that you
+# always want to run here
+
+# get a more recent gcc compiler
+module load gnu
+
+export EDITOR=nano
+export CXX=g++
+export CC=gcc
+
+##
+## quit now if we are in a non-interactive shell
+##
+[ -z "$PS1" ] && return
+
+# colour prompt.  This can get arbitrarily fancy...
+export PS1="\[\033[01;36m\]\u@\h\[\033[01;34m\] \w \$\[\033[00m\] "
