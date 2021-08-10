@@ -14,7 +14,8 @@ default : all
 
 # decay.c requires hdf5 library
 LIBS_decay = -L/usr/lib/x86_64-linux-gnu/hdf5/serial -lhdf5
-CFLAGS_decay = -I/usr/include/hdf5/serial
+
+# io.o uses the hdf5 header files
 CFLAGS_io = -I/usr/include/hdf5/serial
 
 # Add dependencies for the object files and executable
