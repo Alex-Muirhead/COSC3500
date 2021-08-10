@@ -1,1 +1,0 @@
-int mat2hdf5 (double** wdata, int row, int column, char filename[], char dataset[]);
