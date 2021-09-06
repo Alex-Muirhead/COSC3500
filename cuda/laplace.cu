@@ -3,8 +3,8 @@
 #include <fstream>
 
 // lattice size
-int const NX = 1024;
-int const NY = 1024;
+int const NX = 256;
+int const NY = 256;
 
 int const MaxIter = 2000; // number of Jacobi iterations
 
