@@ -2,7 +2,6 @@
 #include <chrono>
 
 using namespace std;
-// Addition of arrays using a stride loop
 
 void checkError(cudaError_t e)
 {
@@ -13,6 +12,7 @@ void checkError(cudaError_t e)
    }
 }
 
+// code that will run on the GPU, but can call it from the CPU
 __global__
 void add(int n, double* x, double const* y)
 {
@@ -51,7 +51,7 @@ int main()
 
    auto t1 = std::chrono::high_resolution_clock::now();
    // Invoke the CUDA kernel with add<<<NumberOfBlocks, NumberOfThreadsPerBlock>>>
-   add<<<1, 1>>>(N, xDevice, yDevice);
+   add<<<1, 1>>>(N, xDevice, yDevice); // asynchronous
    checkError(cudaDeviceSynchronize());
    auto t2 = std::chrono::high_resolution_clock::now();
 
@@ -72,6 +72,8 @@ int main()
    std::cout << "Time = " << duration << " us\n";
 
    // clean up
-   cudaFree(x);
-   cudaFree(y);
+   checkError(cudaFree(xDevice));
+   checkError(cudaFree(yDevice));
+   delete[] x;
+   delete[] y;
 }
