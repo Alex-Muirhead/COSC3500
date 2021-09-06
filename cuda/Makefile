@@ -24,7 +24,7 @@ default : all
 	$(NVCC) $(NVFLAGS) $(NVFLAGS_$(basename $<)) -c $< -o $@
 
 % : %.cu
-	$(NVCC) $(NVFLAGS) $(NVFLAGS_$@) $(filter %.o %.cpp, $^) $(LDFLAGS) $(LIBS_$@) $(LIB) -o $@
+	$(NVCC) $(NVFLAGS) $(NVFLAGS_$@) $(filter %.o %.cu, $^) $(LDFLAGS) $(LIBS_$@) $(LIB) -o $@
 
 all : $(TARGETS)
 
