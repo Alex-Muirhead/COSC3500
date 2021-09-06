@@ -7,7 +7,7 @@
 int const NX = 256;
 int const NY = 256;
 
-int const MaxIter = 2000; // number of Jacobi iterations
+int const MaxIter = 200000; // number of Jacobi iterations
 
 void checkError(cudaError_t e)
 {
