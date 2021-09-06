@@ -1,6 +1,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <cmath>
 
 // lattice size
 int const NX = 256;
@@ -56,12 +57,21 @@ void Initialize(float* T)
       }
    }
 
-    // set left wall to 1
-    for(int y=0; y < NY; ++y)
+   // set left wall to 1
+   // set back wall to a ramp
+    for(int x=0; x < NX; ++x)
     {
-       int index = y*NX;
-       T[index] = 1.0;
+       int index = (NY-1)*NX + x;
+       T[index] = 1.0 - float(x)/NX;
     }
+   // set front wall to a sinusoid
+    for(int x=0; x < NX; ++x)
+    {
+       int index = x;
+       T[index] = std::cos(M_PI_2 * float(x)/NX);
+    }
+
+
 }
 
 int main()
