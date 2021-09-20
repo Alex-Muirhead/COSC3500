@@ -1,4 +1,4 @@
-// COSC3500, Semester 2, 2020
+// COSC3500, Semester 2, 2021
 // Assignment 2
 // Main file - serial version
 

@@ -1,9 +1,8 @@
-// COSC3500, Semester 2, 2020
+// COSC3500, Semester 2, 2021
 // Assignment 2
 // Implementation file for the random number utilities
 
 #include "randutil.h"
-#include <mutex>
 
 namespace randutil
 {
@@ -21,12 +20,12 @@ namespace detail
    std::normal_distribution<double> NormalDist;
 } // namespace detail
 
-std::mutex rd_mutex;
 std::random_device rd;
 
 unsigned crypto_rand()
 {
-   std::lock_guard<std::mutex> guard(rd_mutex);
+   // We used to have a mutex here, but apparantly random_device is thread_safe.
+   // generally we wouldn't want to call this from multiple threads anyway.
    return rd();
 }
 

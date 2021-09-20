@@ -1,4 +1,4 @@
-// COSC3500, Semester 2, 2020
+// COSC3500, Semester 2, 2021
 // Assignment 2
 // Implementation file for the eigensolver functions.
 
@@ -203,18 +203,18 @@ eigenvalues_arpack(int n, int nev, double tol)
 {
    auto StartEigensolver = std::chrono::high_resolution_clock::now();
    // arpack parameters
-   int ido = 0;  // first call
-   char bmat = 'I'; // standard eigenvalue problem
-   char which[3] = "LM";                      // largest magnitude
-   nev = std::min(nev, n-2);   // ARPACK can't calulate more than n-2 eigenvalues
+   int ido = 0;                   // first call
+   char bmat = 'I';               // standard eigenvalue problem
+   char which[3] = "LM";          // largest magnitude
+   nev = std::min(nev, n-2);      // ARPACK can't calulate more than n-2 eigenvalues
    std::vector<double> resid(n);  // residual
-   int ncv = std::min(2*nev, n);            // length of the arnoldi sequence
-   std::vector<double> v(n*ncv);            // workshpace for the Krylov vectors
+   int ncv = std::min(2*nev, n);  // length of the arnoldi sequence
+   std::vector<double> v(n*ncv);  // workshpace for the Krylov vectors
    int const ldv = n;
    ARPACK::iparam_t iparam;
    iparam.ishift = 1;      // exact shifts
    iparam.mxiter = 10000;  // maximum number of arnoldi iterations (restarts?)
-   iparam.mode = 1;  // standard eigenvalue problem
+   iparam.mode = 1;        // standard eigenvalue problem
    ARPACK::dn_ipntr_t ipntr;
    std::vector<double> workd(3*n);
    int const lworkl = ncv * (ncv * 8);
