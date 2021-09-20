@@ -18,11 +18,13 @@ default : all
 $(TARGETS) : randutil.h randutil.ipp randutil.o eigensolver.h eigensolver.o
 
 LIBS_Assignment2_serial = -larpack
+LIBS_Assignment2_avx    = -larpack
 LIBS_Assignment2_openmp = -larpack
 LIBS_Assignment2_mpi    = -larpack
 LIBS_Assignment2_cuda   = -larpack
 
 CXXFLAGS_Assignment2_openmp = -fopenmp
+CXXFLAGS_Assignment2_avx = -mavx
 
 randutil.o : randutil.h randutil.ipp
 eigensolver.o : eigensolver.h
