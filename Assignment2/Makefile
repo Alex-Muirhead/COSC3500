@@ -15,7 +15,7 @@ default : all
 ## Dependencies
 
 # all targets depend on the helper programs
-$(TARGETS) : randutil.h randutil.o eigensolver.h eigensolver.o
+$(TARGETS) : randutil.h randutil.ipp randutil.o eigensolver.h eigensolver.o
 
 LIBS_Assignment2_serial = -larpack
 LIBS_Assignment2_openmp = -larpack
