@@ -14,6 +14,7 @@
 // The external function to evaluate the matrix operation y = Matrix * x
 void MatrixVectorMultiply(double* Y, const double* X);
 
+// Structure to contain the return values of eigenvalues_arpack()
 struct EigensolverInfo
 {
    int NumMultiplies;
