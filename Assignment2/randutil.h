@@ -50,7 +50,7 @@ int rand_int(int Min, int Max);
 // returns a real number in the range [0,1)
 double rand();
 
-// returns a uniformly distributed real number, with mean 0, standard deviation 1
+// returns a normal distributed real number, with mean 0, standard deviation 1
 double randn();
 
 } // namespace randutil
