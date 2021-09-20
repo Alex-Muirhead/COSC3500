@@ -47,14 +47,14 @@ int main(int argc, char** argv)
 
    // Initialize the matrix.  This is a matrix from a Gaussian Orthogonal Ensemble.
    // The matrix is symmetric.
-   // The diagonal entries are gaussian distributed with variance 2.
-   // The off-diagonal entries are gaussian distributed with variance 1.
+   // The diagonal entries are gaussian distributed with variance 1.
+   // The off-diagonal entries are gaussian distributed with variance 1/2.
    for (int i = 0; i < N; ++i)
    {
-      M[i*N+i] = std::sqrt(2.0) * randutil::randn();
+      M[i*N+i] = randutil::randn();
       for (int j = i+1; j < N; ++j)
       {
-         M[i*N + j] = M[j*N + i] = randutil::randn();
+         M[i*N + j] = M[j*N + i] = std::sqrt(0.5) * randutil::randn();
       }
    }
    auto FinishInitialization = std::chrono::high_resolution_clock::now();
