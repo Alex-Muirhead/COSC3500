@@ -1,5 +1,5 @@
 #!/bin/bash -l
-#SBATCH --job-name=SerialAssignment
+#SBATCH --job-name=AVXAssignment
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --ntasks-per-node=1
@@ -17,10 +17,10 @@ echo $SLURM_NODELIST
 echo "running with OMP_NUM_THREADS= $OMP_NUM_THREADS "
 echo "running with SLURM_TASKS_PER_NODE= $SLURM_TASKS_PER_NODE "
 
-if [ ! -f Assignment2_serial ] ; then
+if [ ! -f Assignment2_avx ] ; then
    echo "unable to find decay"
    echo "you probably need to compile code"
    exit 2
 fi
 
-time ./Assignment2_serial 1000 > output_serial.txt
+time ./Assignment2_avx 1000 > output_avx.txt

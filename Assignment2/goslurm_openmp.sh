@@ -23,4 +23,4 @@ if [ ! -f Assignment2_openmp ] ; then
    exit 2
 fi
 
-time ./Assignment2_openmp 1000 >> output_openmp.txt
+time ./Assignment2_openmp 1000 > output_openmp.txt
