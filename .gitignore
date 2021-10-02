@@ -1,0 +1,2 @@
+# Ignore large h5 datafiles
+**/*.h5
