@@ -1,0 +1,6 @@
+running with OMP_NUM_THREADS = 1
+running with MKL_NUM_THREADS = 1
+This is job 'HelloWorld_Test' (id: 10229047) running on the following nodes:
+smp-vm-1
+running with OMP_NUM_THREADS= 1 
+running with SLURM_TASKS_PER_NODE= 1 

@@ -26,7 +26,7 @@ marker = [0]*N
 for i, coord in enumerate(coords):
     marker[i] = plt.scatter(coord[0], coord[1], color='blue', alpha=1, s=10**2)
 
-def update_plot(t): 
+def update_plot(t):
     for i in range(N):
         if time_series[i][t] > 0.5:
             alpha = 1
