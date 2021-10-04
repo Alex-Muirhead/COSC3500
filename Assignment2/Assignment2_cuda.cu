@@ -18,10 +18,12 @@ double* M = nullptr;
 double* Mdevice = nullptr;
 
 double* Ydevice = nullptr;
-double* XDevice = nullptr;
+double* Xdevice = nullptr;
 
 int N = 0;
+int Blocks = 0;
 
+const int BLOCKSIZE = 256;
 
 void checkError(cudaError_t e)
 {
@@ -32,18 +34,45 @@ void checkError(cudaError_t e)
    }
 }
 
+// 59 us @ N=100, 558 us @ N=1000, 5658 us @ N=10_000
+// __global__
+// void MatVecMulKernel(int N, double* Y, const double* X, const double* M)
+// {
+//    // Each thread calculates a single value of Y.
+//    int row = blockIdx.x*BLOCKSIZE + threadIdx.x;
+//    double Yvalue = 0.0;
+//    __shared__ double Xsub[BLOCKSIZE];
+//    for (int subIdx = 0; subIdx < gridDim.x; ++subIdx)
+//    {
+//       int precol = threadIdx.x + subIdx*BLOCKSIZE;
+//       if (precol < N)
+//          Xsub[threadIdx.x] = X[precol];
+//       __syncthreads();
+//       for (int subcol = 0; subcol < BLOCKSIZE; ++subcol)
+//       {
+//          int col = subcol + subIdx*BLOCKSIZE;
+//          if (col >= N || row >= N) break;
+//          Yvalue += M[col*N+row] * Xsub[subcol];
+//       }
+//       __syncthreads();
+//    }
+//    if (row < N)
+//       Y[row] = Yvalue;
+// }
+
+// 50 us @ N=100, 254 us @ N=1000, 4036 us @ N=10_000
 __global__
-void GPUMatrixVectorMultiply(int N, double* Y, const double* X)
+void MatVecMulKernel(int N, double* Y, const double* X, const double* M)
 {
-   int i = blockIdx.x*blockDim.x + threadIdx.x;
-   if (i < N)
+   // Each thread calculates a single value of Y.
+   int i = blockIdx.x*BLOCKSIZE + threadIdx.x;
+   if (i >= N) return;
+   double Yvalue = 0.0;
+   for (int j = 0; j < N; ++j)
    {
-      Y[i] = 0;
-      for (int j = 0; j < N; ++j)
-      {
-         Y[i] += M[i*N+j] * X[j];
-      }
+      Yvalue += M[j*N+i] * X[j];
    }
+   Y[i] = Yvalue;
 }
 
 // implementation of the matrix-vector multiply function
@@ -51,10 +80,8 @@ void MatrixVectorMultiply(double* Y, const double* X)
 {
    // Total threads = Blocks * ThreadsPerBlock >= N
    // At least one thread per row of matrix, avoids data-race at Y
-   int ThreadsPerBlock = 256;
-   int Blocks = (N+ThreadsPerBlock-1)/ThreadsPerBlock;
    checkError(cudaMemcpy(Xdevice, X, N*sizeof(double), cudaMemcpyHostToDevice));
-   GPUMatrixVectorMultiply<<<Blocks, ThreadsPerBlock>>>(N, Ydevice, XDevice);
+   MatVecMulKernel<<<Blocks, BLOCKSIZE>>>(N, Ydevice, Xdevice, Mdevice);
    checkError(cudaMemcpy(Y, Ydevice, N*sizeof(double), cudaMemcpyDeviceToHost));
 }
 
@@ -70,6 +97,8 @@ int main(int argc, char** argv)
       return 1;
    }
    N = std::stoi(argv[1]);
+
+   Blocks = (N+BLOCKSIZE-1)/BLOCKSIZE;
 
    // Allocate memory for the matrix
    M = static_cast<double*>(malloc(N*N*sizeof(double)));
@@ -117,8 +146,8 @@ int main(int argc, char** argv)
    std::cout << "Time per matrix-vector multiplication:  " << std::setw(12) << (Info.TimeInMultiply / Info.NumMultiplies).count() << " us\n";
 
    // free memory
-   checkError(cudaFree(XDevice));
-   checkError(cudaFree(YDevice));
-   checkError(cudaFree(MDevice));
+   checkError(cudaFree(Xdevice));
+   checkError(cudaFree(Ydevice));
+   checkError(cudaFree(Mdevice));
    free(M);
 }
