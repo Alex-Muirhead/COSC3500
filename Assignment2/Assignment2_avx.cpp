@@ -18,36 +18,32 @@ double* M = nullptr;
 int N = 0;
 
 // implementation of the matrix-vector multiply function
+
 void MatrixVectorMultiply(double* Y, const double* X)
 {
-   __m256d vec_chunk = _mm256_set1_pd(X[0]);
-   int j;
-   for (j = 0; j < N; j += 4)  // j is the column
+   // Assign space for variables
+   __m256d sum_chunk;
+   __m256d row_chunk;
+   __m256d mul_chunk;
+   __m256d vec_chunk;
+   // Set everything to zero first
+   for (int col = 0; col < N; ++col) Y[col] = 0.0;
+   for (int row = 0; row < N; ++row)
    {
-      __m256d row_chunk = _mm256_from_ptr(M+j);
-      __m256d mul_chunk = _mm256_mul_pd(vec_chunk, row_chunk);
-      _mm256_storeu_pd(Y+j, mul_chunk);
-   }
-   for (; j < N; ++j)
-   {
-      Y[0] += M[j] * X[j];
-   }
-   for (int i = 1; i < N; i++)  // i is the row
-   {
-      __m256d vec_chunk = _mm256_set1_pd(X[i]);
-      for (j = 0; j < N; j += 4)  // j is the column
+      int col;
+      vec_chunk = _mm256_set1_pd(X[row]);
+      for (col = 0; col+4 <= N; col += 4)
       {
-         __m256d out_chunk = _mm256_loadu_pd(Y+j);
-         __m256d row_chunk = _mm256_from_ptr(M+i*N+j);
-         __m256d mul_chunk = _mm256_mul_pd(row_chunk, vec_chunk);
-         // out_chunk = _mm256_fmadd_pd(vec_chunk, row_chunk, out_chunk);
+         sum_chunk = _mm256_loadu_pd(Y+col);
+         row_chunk = _mm256_from_ptr(M+row*N+col);
+         mul_chunk = _mm256_mul_pd(row_chunk, vec_chunk);
          // Acculuate elements
-         out_chunk = _mm256_add_pd(out_chunk, mul_chunk);
-         _mm256_storeu_pd(Y+j, out_chunk);
+         sum_chunk = _mm256_add_pd(sum_chunk, mul_chunk);
+         _mm256_storeu_pd(Y+col, sum_chunk);
       }
-      for (; j < N; ++j)
-      {
-         Y[i] += M[i*N+j] * X[j];
+      // Clean up cols past last chunk of 4
+      for (; col < N; ++col) {
+         Y[col] += M[row*N+col] * X[row];
       }
    }
 }
