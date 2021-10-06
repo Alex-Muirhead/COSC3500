@@ -1,10 +1,100 @@
+Obtained 98 eigenvalues.
+The largest eigenvalue is:    19.3987432626
+Total time:                                     4223 us
+Time spent in initialization:                    402 us
+Time spent in eigensolver:                      3773 us
+   Of which the multiply function used:         1026 us
+   And the eigensolver library used:            2747 us
+Total serial (initialization + solver):         3197 us
+Number of matrix-vector multiplies:              100
+Time per matrix-vector multiplication:            10 us
+Obtained 100 eigenvalues.
+The largest eigenvalue is:   -27.5428730835
+Total time:                                    26268 us
+Time spent in initialization:                   1496 us
+Time spent in eigensolver:                     24587 us
+   Of which the multiply function used:         8648 us
+   And the eigensolver library used:           15939 us
+Total serial (initialization + solver):        17620 us
+Number of matrix-vector multiplies:              200
+Time per matrix-vector multiplication:            43 us
+Obtained 100 eigenvalues.
+The largest eigenvalue is:      34.27273035
+Total time:                                   100827 us
+Time spent in initialization:                   3266 us
+Time spent in eigensolver:                     97374 us
+   Of which the multiply function used:        29067 us
+   And the eigensolver library used:           68307 us
+Total serial (initialization + solver):        71760 us
+Number of matrix-vector multiplies:              302
+Time per matrix-vector multiplication:            96 us
+Obtained 100 eigenvalues.
+The largest eigenvalue is:   -40.3999766907
+Total time:                                  3763751 us
+Time spent in initialization:                   5699 us
+Time spent in eigensolver:                   3757833 us
+   Of which the multiply function used:        55015 us
+   And the eigensolver library used:         3702818 us
+Total serial (initialization + solver):      3708736 us
+Number of matrix-vector multiplies:              318
+Time per matrix-vector multiplication:           173 us
+Obtained 100 eigenvalues.
+The largest eigenvalue is:    44.1391489815
+Total time:                                  8467005 us
+Time spent in initialization:                   8943 us
+Time spent in eigensolver:                   8457837 us
+   Of which the multiply function used:       101942 us
+   And the eigensolver library used:         8355895 us
+Total serial (initialization + solver):      8365063 us
+Number of matrix-vector multiplies:              376
+Time per matrix-vector multiplication:           271 us
+Obtained 100 eigenvalues.
+The largest eigenvalue is:   -48.5878363873
+Total time:                                 10151725 us
+Time spent in initialization:                  12463 us
+Time spent in eigensolver:                  10138997 us
+   Of which the multiply function used:       148150 us
+   And the eigensolver library used:         9990847 us
+Total serial (initialization + solver):     10003575 us
+Number of matrix-vector multiplies:              379
+Time per matrix-vector multiplication:           390 us
+Obtained 100 eigenvalues.
+The largest eigenvalue is:   -52.5887170962
+Total time:                                 11410420 us
+Time spent in initialization:                  17010 us
+Time spent in eigensolver:                  11393133 us
+   Of which the multiply function used:       208332 us
+   And the eigensolver library used:        11184801 us
+Total serial (initialization + solver):     11202088 us
+Number of matrix-vector multiplies:              389
+Time per matrix-vector multiplication:           535 us
+Obtained 100 eigenvalues.
+The largest eigenvalue is:    55.9213383407
+Total time:                                 14968414 us
+Time spent in initialization:                  22494 us
+Time spent in eigensolver:                  14945644 us
+   Of which the multiply function used:       313173 us
+   And the eigensolver library used:        14632471 us
+Total serial (initialization + solver):     14655241 us
+Number of matrix-vector multiplies:              446
+Time per matrix-vector multiplication:           702 us
+Obtained 100 eigenvalues.
+The largest eigenvalue is:   -59.4905571981
+Total time:                                 15752113 us
+Time spent in initialization:                  28021 us
+Time spent in eigensolver:                  15723753 us
+   Of which the multiply function used:       404084 us
+   And the eigensolver library used:        15319669 us
+Total serial (initialization + solver):     15348029 us
+Number of matrix-vector multiplies:              453
+Time per matrix-vector multiplication:           892 us
 Obtained 100 eigenvalues.
 The largest eigenvalue is:    62.5854514013
-Total time:                                 16365699 us
-Time spent in initialization:                  32128 us
-Time spent in eigensolver:                  16333258 us
-   Of which the multiply function used:       513482 us
-   And the eigensolver library used:        15819776 us
-Total serial (initialization + solver):     15852217 us
+Total time:                                 15713421 us
+Time spent in initialization:                  34157 us
+Time spent in eigensolver:                  15678913 us
+   Of which the multiply function used:       501428 us
+   And the eigensolver library used:        15177485 us
+Total serial (initialization + solver):     15211993 us
 Number of matrix-vector multiplies:              455
-Time per matrix-vector multiplication:          1128 us
+Time per matrix-vector multiplication:          1102 us

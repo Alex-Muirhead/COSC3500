@@ -18,9 +18,12 @@ echo "running with OMP_NUM_THREADS= $OMP_NUM_THREADS "
 echo "running with SLURM_TASKS_PER_NODE= $SLURM_TASKS_PER_NODE "
 
 if [ ! -f Assignment2_openmp ] ; then
-   echo "unable to find decay"
+   echo "unable to find file"
    echo "you probably need to compile code"
    exit 2
 fi
 
-time ./Assignment2_openmp 1000 > output_openmp.txt
+> output_openmp.txt
+for i in {100..1000..100}; do
+   time ./Assignment2_openmp $i >> output_openmp.txt
+done
