@@ -1,5 +1,7 @@
 #include <mpi.h>
 #include <cstdio>
+#include <iostream>
+#include <iomanip>
 
 using namespace std;
 
@@ -7,8 +9,13 @@ int main(int argc, char** argv)
 {
    MPI_Init(&argc, &argv);
 
+   if (argc < 2)
+   {
+      std::cerr << "expected: message limit <N>\n";
+      return 1;
+   }
    // maximum number of messages to send
-   int count_limit = 4;
+   int count_limit = std::stoi(argv[1]);
 
    // Find out rank, size
    int world_size;
