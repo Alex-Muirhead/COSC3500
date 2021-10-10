@@ -25,7 +25,7 @@ if [ ! -f Assignment2_cuda ] ; then
 fi
 
 > output_cuda.txt
-for i in {4..10}; do
+for i in {4..15}; do
    mat_size=$((1<<i))
    printf "Matrix size: %36s\n" $mat_size >> output_cuda.txt
    time ./Assignment2_cuda $mat_size >> output_cuda.txt
