@@ -24,6 +24,8 @@ if [ ! -f Assignment2_serial ] ; then
 fi
 
 > output_serial.txt
-for i in {100..1000..100}; do
-   time ./Assignment2_serial $i >> output_serial.txt
+for i in {4..15}; do
+   mat_size=$((1<<i))
+   echo "Matrix size $mat_size" >> output_serial.txt
+   time ./Assignment2_serial $mat_size >> output_serial.txt
 done

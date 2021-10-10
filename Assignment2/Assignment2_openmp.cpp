@@ -44,6 +44,11 @@ int main(int argc, char** argv)
    // Allocate memory for the matrix
    M = static_cast<double*>(malloc(N*N*sizeof(double)));
 
+   if (M == nullptr) {
+      std::cerr << "failed to allocate aligned memory\n";
+      return 1;
+   }
+
    // seed the random number generator to a known state
    randutil::seed(4);  // The standard random number.  https://xkcd.com/221/
 

@@ -24,6 +24,8 @@ if [ ! -f Assignment2_openmp ] ; then
 fi
 
 > output_openmp.txt
-for i in {100..1000..100}; do
-   time ./Assignment2_openmp $i >> output_openmp.txt
+for i in {4..15}; do
+   mat_size=$((1<<i))
+   printf "Matrix size: %36s\n" $mat_size >> output_openmp.txt
+   time ./Assignment2_openmp $mat_size >> output_openmp.txt
 done

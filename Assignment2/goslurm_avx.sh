@@ -24,6 +24,8 @@ if [ ! -f Assignment2_avx ] ; then
 fi
 
 > output_avx.txt
-for i in {100..1000..100}; do
-   time ./Assignment2_avx $i >> output_avx.txt
+for i in {4..15}; do
+   mat_size=$((1<<i))
+   printf "Matrix size: %36s\n" $mat_size >> output_avx.txt
+   time ./Assignment2_avx $mat_size >> output_avx.txt
 done
