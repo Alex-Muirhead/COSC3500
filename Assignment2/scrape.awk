@@ -1,7 +1,11 @@
 BEGIN { FS = ":" }
+/size/ {
+    gsub(/ /, "")
+    size = $2
+}
 /per/ {
     count++
     gsub(/ /, "")
     gsub(/us$/, "")
-    printf "%4d,\n", $2
+    printf "[%5d, %5d],\n", size, $2
 }
