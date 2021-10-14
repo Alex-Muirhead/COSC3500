@@ -17,33 +17,99 @@
 double* M = nullptr;
 int N = 0;
 
+// Sourced from https://stackoverflow.com/a/26905830
+static inline double horizontal_add (__m256d a) {
+   __m256d t1 = _mm256_hadd_pd(a,a);
+   __m128d t2 = _mm256_extractf128_pd(t1,1);
+   __m128d t3 = _mm_add_sd(_mm256_castpd256_pd128(t1),t2);
+   return _mm_cvtsd_f64(t3);
+}
+
 // implementation of the matrix-vector multiply function
+// void MatrixVectorMultiply(double* Y, const double* X)
+// /* IN-COLUMN IMPLEMENTATION */
+// {
+//    // Assign space for variables
+//    __m256d sum_chunk;
+//    __m256d col_chunk;
+//    __m256d mul_chunk;
+//    __m256d vec_chunk;
+//    // Set everything to zero first
+//    for (int col = 0; col < N; ++col) Y[col] = 0.0;
+//    for (int col = 0; col < N; ++col)
+//    {
+//       int row;
+//       vec_chunk = _mm256_set1_pd(X[col]);
+//       for (row = 0; row+4 <= N; row += 4)
+//       {
+//          sum_chunk = _mm256_loadu_pd(Y+row);
+//          col_chunk = _mm256_from_ptr(M+col*N+row); // Use symmetry for spatial locality
+//          mul_chunk = _mm256_mul_pd(col_chunk, vec_chunk);
+//          // Acculuate elements
+//          sum_chunk = _mm256_add_pd(sum_chunk, mul_chunk);
+//          _mm256_storeu_pd(Y+row, sum_chunk);
+//       }
+//       // Clean up rows past last chunk of 4
+//       for (; row < N; ++row) {
+//          Y[row] += M[col*N+row] * X[col];
+//       }
+//    }
+// }
+
+// void MatrixVectorMultiply(double* Y, const double* X)
+// /* IN-ROW IMPLEMENTATION */
+// {
+//    // Assign space for variables
+//    __m256d sum_chunk;
+//    __m256d col_chunk;
+//    __m256d mul_chunk;
+//    __m256d vec_chunk;
+//    // Set everything to zero first
+//    for (int col = 0; col < N; ++col) Y[col] = 0.0;
+//    int row;
+//    for (row = 0; row+4 <= N; row += 4)
+//    {
+//       sum_chunk = _mm256_loadu_pd(Y+row);
+//       for (int col = 0; col < N; ++col)
+//       {
+//          vec_chunk = _mm256_set1_pd(X[col]);
+//          col_chunk = _mm256_from_ptr(M+col*N+row); // Use symmetry for spatial locality
+//          mul_chunk = _mm256_mul_pd(col_chunk, vec_chunk);
+//          // Acculuate elements
+//          sum_chunk = _mm256_add_pd(sum_chunk, mul_chunk);
+//       }
+//       _mm256_storeu_pd(Y+row, sum_chunk);
+//       // Clean up rows past last chunk of 4
+//    }
+//    for (int end_row = row; end_row < N; ++end_row) {
+//        for (int col = 0; col < N; ++col) {
+//          Y[end_row] += M[end_row*N+col] * X[col];
+//       }
+//    }
+// }
 
 void MatrixVectorMultiply(double* Y, const double* X)
+/* H-ADD IMPLEMENTATION */
 {
    // Assign space for variables
-   __m256d sum_chunk;
-   __m256d row_chunk;
+   __m256d col_chunk;
    __m256d mul_chunk;
    __m256d vec_chunk;
    // Set everything to zero first
-   for (int col = 0; col < N; ++col) Y[col] = 0.0;
-   for (int row = 0; row < N; ++row)
+   int col;
+   for (int row = 0; row <= N; ++row)
    {
-      int col;
-      vec_chunk = _mm256_set1_pd(X[row]);
+      Y[row] = 0.0;
       for (col = 0; col+4 <= N; col += 4)
       {
-         sum_chunk = _mm256_loadu_pd(Y+col);
-         row_chunk = _mm256_from_ptr(M+row*N+col);
-         mul_chunk = _mm256_mul_pd(row_chunk, vec_chunk);
+         vec_chunk = _mm256_loadu_pd(X+col);
+         col_chunk = _mm256_from_ptr(M+row*N+col);
+         mul_chunk = _mm256_mul_pd(col_chunk, vec_chunk);
          // Acculuate elements
-         sum_chunk = _mm256_add_pd(sum_chunk, mul_chunk);
-         _mm256_storeu_pd(Y+col, sum_chunk);
+         Y[row] += horizontal_add(mul_chunk);
       }
-      // Clean up cols past last chunk of 4
       for (; col < N; ++col) {
-         Y[col] += M[row*N+col] * X[row];
+         Y[row] += M[row*N+col] * X[col];
       }
    }
 }

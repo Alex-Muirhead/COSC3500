@@ -4,8 +4,8 @@
 #SBATCH --ntasks=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=1
-# #SBATCH --mem-per-cpu=1G # memory (MB)
-#SBATCH --time=0-00:05 # time (D-HH:MM)
+#SBATCH --mem-per-cpu=2G # memory (MB)
+#SBATCH --time=0-00:10 # time (D-HH:MM)
 
 
 export OMP_NUM_THREADS=${SLURM_CPUS_PER_TASK}
@@ -23,9 +23,9 @@ if [ ! -f Assignment2_avx ] ; then
    exit 2
 fi
 
-> output_avx.txt
+> data/output_avx.txt
 for i in {4..15}; do
    mat_size=$((1<<i))
-   printf "Matrix size: %36s\n" $mat_size >> output_avx.txt
-   time ./Assignment2_avx $mat_size >> output_avx.txt
+   printf "Matrix size: %36s\n" $mat_size >> data/output_avx.txt
+   time ./Assignment2_avx $mat_size >> data/output_avx.txt
 done
