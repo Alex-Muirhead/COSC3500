@@ -45,7 +45,7 @@ int main(int argc, char** argv)
    M = static_cast<double*>(malloc(N*N*sizeof(double)));
 
    if (M == nullptr) {
-      std::cerr << "failed to allocate aligned memory\n";
+      std::cerr << "failed to allocate memory\n";
       return 1;
    }
 
