@@ -3,9 +3,13 @@ BEGIN { FS = ":" }
     gsub(/ /, "")
     size = $2
 }
-/per/ {
-    count++
+/Total time/ {
     gsub(/ /, "")
     gsub(/us$/, "")
-    printf "[%5d, %5d],\n", size, $2
+    total = $2
+}
+/per/ {
+    gsub(/ /, "")
+    gsub(/us$/, "")
+    printf "[%5d, %8d, %10d],\n", size, $2, total
 }
