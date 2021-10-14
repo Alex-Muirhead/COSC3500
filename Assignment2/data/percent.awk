@@ -17,5 +17,5 @@ BEGIN { FS = ":" }
     gsub(/ /, "")
     gsub(/us$/, "")
     eig = $2
-    printf "Size: %4d, Percent used: %4.1f%%\n", size, mult/total*100
+    printf "Size: %5d, Percent used: %4.1f%%\n", size, mult/total*100
 }
